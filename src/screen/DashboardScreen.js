@@ -90,9 +90,9 @@ const DashboardScreen = ({ route, navigation }) => {
         }
         Alert.alert('Xác nhận', 'Bạn có chắc chắn muốn xóa bình luận này?', [
             { text: 'Hủy', style: 'cancel' },
-            { 
-                text: 'Xóa', 
-                style: 'destructive', 
+            {
+                text: 'Xóa',
+                style: 'destructive',
                 onPress: async () => {
                     try {
                         const response = await apiClient(`/admin/comments/${commentId}`, 'DELETE');
@@ -199,8 +199,8 @@ const DashboardScreen = ({ route, navigation }) => {
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-            <Text style={styles.title}>Bảng Điểm Của Tôi</Text>
-            
+            <Text style={styles.title}>Bảng Điểm Học Sinh</Text>
+
             {/* 1. THÔNG TIN CÁ NHÂN */}
             <View style={styles.card}>
                 <Text style={styles.cardTitle}>Thông tin học sinh</Text>
@@ -216,13 +216,13 @@ const DashboardScreen = ({ route, navigation }) => {
                     )
                 ) : (
                     <Text style={styles.text}>
-                        {user?.role === 'admin' 
-                            ? 'Bạn là Quản trị viên, vui lòng dùng Website để quản lý toàn diện.' 
+                        {user?.role === 'admin'
+                            ? 'Bạn là Quản trị viên, vui lòng dùng Website để quản lý toàn diện.'
                             : 'Xin chào, Giáo viên. Quản lý thông tin học sinh ở bên dưới.'}
                     </Text>
                 )}
             </View>
-            
+
             {/* 2. DANH SÁCH ĐIỂM SỐ */}
             {user?.role === 'user' && (
                 <View style={styles.card}>
@@ -243,7 +243,7 @@ const DashboardScreen = ({ route, navigation }) => {
                                         <Text>Điểm Thi: <Text style={styles.boldText}>{item.final_score}</Text></Text>
                                     </View>
                                     <View style={styles.totalRow}>
-                                        <Text style={{color: '#fff', fontWeight: 'bold'}}>Tổng kết: {total}</Text>
+                                        <Text style={{ color: '#fff', fontWeight: 'bold' }}>Tổng kết: {total}</Text>
                                     </View>
                                 </View>
                             );
@@ -256,35 +256,35 @@ const DashboardScreen = ({ route, navigation }) => {
             {user?.role === 'user' && (
                 <View style={styles.card}>
                     <Text style={styles.cardTitle}>Đánh giá & Phản hồi</Text>
-                    <Text style={{marginBottom: 15, color: '#666', fontStyle: 'italic'}}>
+                    <Text style={{ marginBottom: 15, color: '#666', fontStyle: 'italic' }}>
                         Gửi thắc mắc về điểm số hoặc đánh giá mức độ hài lòng về bài giảng.
                     </Text>
-                    
-                    <CustomInput 
-                        label="Tên của bạn" 
-                        placeholder="Nhập tên..." 
-                        value={reviewerName} 
-                        onChangeText={setReviewerName} 
+
+                    <CustomInput
+                        label="Tên của bạn"
+                        placeholder="Nhập tên..."
+                        value={reviewerName}
+                        onChangeText={setReviewerName}
                     />
-                    <CustomInput 
-                        label="Email (Tuỳ chọn)" 
-                        placeholder="Nhập email liên hệ..." 
-                        value={email} 
-                        onChangeText={setEmail} 
+                    <CustomInput
+                        label="Email (Tuỳ chọn)"
+                        placeholder="Nhập email liên hệ..."
+                        value={email}
+                        onChangeText={setEmail}
                     />
-                    <CustomInput 
-                        label="Điểm đánh giá (Từ 1 đến 5)" 
-                        placeholder="Ví dụ: 5" 
-                        value={rating} 
-                        onChangeText={setRating} 
+                    <CustomInput
+                        label="Điểm đánh giá (Từ 1 đến 5)"
+                        placeholder="Ví dụ: 5"
+                        value={rating}
+                        onChangeText={setRating}
                     />
-                    <CustomInput 
-                        label="Nội dung" 
-                        placeholder="Nhập bình luận của bạn..." 
-                        value={content} 
-                        onChangeText={setContent} 
+                    <CustomInput
+                        label="Nội dung"
+                        placeholder="Nhập bình luận của bạn..."
+                        value={content}
+                        onChangeText={setContent}
                     />
-                    
+
                     <CustomButton title="Gửi Đánh Giá" onPress={handleSubmitComment} />
                 </View>
             )}
@@ -315,12 +315,12 @@ const DashboardScreen = ({ route, navigation }) => {
             {user?.role === 'teacher' && (
                 <View style={styles.card}>
                     <Text style={styles.cardTitle}>Danh sách học sinh</Text>
-                    
-                    <CustomInput 
+
+                    <CustomInput
                         label=""
-                        placeholder="Tìm kiếm theo tên hoặc mã HS..." 
-                        value={searchQuery} 
-                        onChangeText={setSearchQuery} 
+                        placeholder="Tìm kiếm theo tên hoặc mã HS..."
+                        value={searchQuery}
+                        onChangeText={setSearchQuery}
                     />
 
                     {teacherStudents
@@ -330,16 +330,16 @@ const DashboardScreen = ({ route, navigation }) => {
                                 <Text style={styles.boldText}>{student.full_name} ({student.class_name})</Text>
                                 <Text style={styles.text}>Mã HS: <Text style={styles.boldText}>{student.student_id}</Text></Text>
                                 {student.subject_name ? (
-                                    <View style={{marginTop: 5, padding: 8, backgroundColor: '#eee', borderRadius: 5}}>
+                                    <View style={{ marginTop: 5, padding: 8, backgroundColor: '#eee', borderRadius: 5 }}>
                                         <Text>Môn: <Text style={styles.boldText}>{student.subject_name}</Text> - HK: {student.semester}</Text>
                                         <Text>Điểm QT: {student.process_score} | Điểm Thi: {student.final_score}</Text>
                                     </View>
                                 ) : (
-                                    <Text style={[styles.text, {fontStyle: 'italic', color: '#888', marginTop: 5}]}>Chưa có điểm</Text>
+                                    <Text style={[styles.text, { fontStyle: 'italic', color: '#888', marginTop: 5 }]}>Chưa có điểm</Text>
                                 )}
                                 <View style={{ marginTop: 10 }}>
-                                    <CustomButton 
-                                        title="Nhập / Sửa điểm" 
+                                    <CustomButton
+                                        title="Nhập / Sửa điểm"
                                         onPress={() => {
                                             setSelectedStudentForGrade(student);
                                             setGradeForm({
@@ -349,7 +349,7 @@ const DashboardScreen = ({ route, navigation }) => {
                                                 final_score: student.final_score !== null && student.final_score !== undefined ? student.final_score.toString() : ''
                                             });
                                             setModalVisible(true);
-                                        }} 
+                                        }}
                                     />
                                 </View>
                             </View>
@@ -363,30 +363,30 @@ const DashboardScreen = ({ route, navigation }) => {
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
                         <Text style={styles.cardTitle}>Nhập / Sửa điểm cho {selectedStudentForGrade?.full_name}</Text>
-                        
-                        <CustomInput 
-                            label="Tên môn học" 
-                            placeholder="Ví dụ: Toán, Ngữ Văn..." 
-                            value={gradeForm.subject_name} 
-                            onChangeText={(text) => setGradeForm({...gradeForm, subject_name: text})} 
+
+                        <CustomInput
+                            label="Tên môn học"
+                            placeholder="Ví dụ: Toán, Ngữ Văn..."
+                            value={gradeForm.subject_name}
+                            onChangeText={(text) => setGradeForm({ ...gradeForm, subject_name: text })}
                         />
-                        <CustomInput 
-                            label="Học kỳ" 
-                            placeholder="Ví dụ: HK1, HK2..." 
-                            value={gradeForm.semester} 
-                            onChangeText={(text) => setGradeForm({...gradeForm, semester: text})} 
+                        <CustomInput
+                            label="Học kỳ"
+                            placeholder="Ví dụ: HK1, HK2..."
+                            value={gradeForm.semester}
+                            onChangeText={(text) => setGradeForm({ ...gradeForm, semester: text })}
                         />
-                        <CustomInput 
-                            label="Điểm quá trình (Hệ số 0.4)" 
-                            placeholder="0 - 10" 
-                            value={gradeForm.process_score} 
-                            onChangeText={(text) => setGradeForm({...gradeForm, process_score: text})} 
+                        <CustomInput
+                            label="Điểm quá trình (Hệ số 0.4)"
+                            placeholder="0 - 10"
+                            value={gradeForm.process_score}
+                            onChangeText={(text) => setGradeForm({ ...gradeForm, process_score: text })}
                         />
-                        <CustomInput 
-                            label="Điểm thi cuối kỳ (Hệ số 0.6)" 
-                            placeholder="0 - 10" 
-                            value={gradeForm.final_score} 
-                            onChangeText={(text) => setGradeForm({...gradeForm, final_score: text})} 
+                        <CustomInput
+                            label="Điểm thi cuối kỳ (Hệ số 0.6)"
+                            placeholder="0 - 10"
+                            value={gradeForm.final_score}
+                            onChangeText={(text) => setGradeForm({ ...gradeForm, final_score: text })}
                         />
 
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 15 }}>
@@ -400,19 +400,12 @@ const DashboardScreen = ({ route, navigation }) => {
                     </View>
                 </View>
             </Modal>
-            
+
             {/* NÚT ĐĂNG XUẤT */}
-            {/* CÁC NÚT ĐIỀU HƯỚNG */}
             <View style={{ marginTop: 10, marginBottom: 30, width: '100%' }}>
-                {user?.role === 'user' && (
-                    <CustomButton 
-                        title="Góp ý & Liên hệ" 
-                        onPress={() => navigation.navigate('Contact')} 
-                    />
-                )}
-                <CustomButton 
-                    title="Đăng xuất" 
-                    onPress={() => navigation.navigate('Login')} 
+                <CustomButton
+                    title="Đăng xuất"
+                    onPress={() => navigation.navigate('Home')}
                 />
             </View>
         </ScrollView>
