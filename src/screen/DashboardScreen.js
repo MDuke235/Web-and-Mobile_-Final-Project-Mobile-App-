@@ -199,7 +199,13 @@ const DashboardScreen = ({ route, navigation }) => {
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-            <Text style={styles.title}>Bảng Điểm Học Sinh</Text>
+            <Text style={styles.title}>
+                {user?.role === 'admin' || user?.role === 'superadmin'
+                    ? 'Admin quản trị'
+                    : user?.role === 'teacher'
+                        ? 'Giáo viên quản lý'
+                        : 'Bảng Điểm Học Sinh'}
+            </Text>
 
             {/* 1. THÔNG TIN CÁ NHÂN */}
             <View style={styles.card}>
